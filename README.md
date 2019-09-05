@@ -1,7 +1,5 @@
 ## 1.简介
-> 本文主要介绍SpringBoot2.1.5 + Dubbo 2.7.3 + Mybatis 3.4.2 + Nacos 1.1.3 +
-> Seata 0.8.0整合， 使用 Seata 实现dubbo服务之间调用的分布式事务，使用Nacos 作为 Duubo和Seata
-> 的注册中心和配置中心,使用 MySQL 数据库和 MyBatis。
+>本文主要介绍SpringBoot2.1.5 + Dubbo 2.7.3 + Mybatis 3.4.2 + Nacos 1.1.3 +Seata 0.8.0整合来实现Dubbo分布式事务管理，使用Nacos 作为 Dubbo和Seata的注册中心和配置中心,使用 MySQL 数据库和 MyBatis来操作数据。
 
 如果你还对`SpringBoot`、`Dubbo`、`Nacos`、`Seata`、` Mybatis` 不是很了解的话，这里我为大家整理个它们的官网网站，如下
 
@@ -18,9 +16,7 @@
 在这里我们就不一个一个介绍它们是怎么使用和原理，详细请学习官方文档，在这里我将开始对它们进行整合，完成一个简单的案例，来让大家了解`Seata`来实现`Dubbo`分布式事务管理的基本流程。
 
 ## 2.环境准备
-
 ## 2.1 下载nacos并安装启动
-
 nacos下载：[https://github.com/alibaba/nacos/releases/tag/1.1.3](https://github.com/alibaba/nacos/releases/tag/1.1.3)
 
 Nacos 快速入门：[https://nacos.io/en-us/docs/quick-start.html](https://nacos.io/en-us/docs/quick-start.html)
@@ -162,7 +158,7 @@ metrics.exporter-prometheus-port=9898
 - service.vgroup_mapping.storage-service-seata-service-group=default
 - service.vgroup_mapping.business-service-seata-service-group=default
 
-也可以在 Nacos 配置页面添加，data-id 为 service.vgroup_mapping.${YOUR_SERVICE_NAME}-fescar-service-group, group 为 SEATA_GROUP， 如果不添加该配置，启动后会提示no available server to connect
+也可以在 Nacos 配置页面添加，data-id 为 service.vgroup_mapping.${YOUR_SERVICE_NAME}-seata-service-group, group 为 SEATA_GROUP， 如果不添加该配置，启动后会提示no available server to connect
 
 **注意：** 配置文件末尾有空行，需要删除，否则会提示失败，尽管实际上是成功的
 
@@ -892,7 +888,6 @@ public class SeataAutoConfig {
         factoryBean.setDataSource(dataSourceProxy);
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources("classpath*:/mapper/*.xml"));
-        factoryBean.setTransactionFactory(new JdbcTransactionFactory());
         return factoryBean.getObject();
     }
 
@@ -968,7 +963,7 @@ public class AccountExampleApplication {
 
 并且在nocos的控制台查看注册情况: http://192.168.10.200:8848/nacos/#/serviceManagement
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20190905121038906.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9saWRvbmcxNjY1LmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190905131449502.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9saWRvbmcxNjY1LmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
 
 我们可以看到上面的服务都已经注册成功。
 
@@ -1019,14 +1014,14 @@ t_storage
 数据没有问题。
 
 ### 5.2 测试回滚
-我们`samples-business`将`BusinessServiceImpl`的`handleBusiness` 下面的代码去掉注释
+我们`samples-business`将`BusinessServiceImpl`的`handleBusiness2` 下面的代码去掉注释
 
 ```
 if (!flag) {
   throw new RuntimeException("测试抛异常后，分布式事务回滚！");
 }
 ```
-重启`samples-business`业务模块, 并且重新发送上面的请求
+使用postman 发送 ：[http://localhost:8104/business/dubbo/buy2](http://localhost:8104/business/dubbo/buy2) 
 
 .响应结果：
 
