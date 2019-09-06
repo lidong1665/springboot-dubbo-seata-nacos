@@ -1023,7 +1023,7 @@ if (!flag) {
 ```
 使用postman 发送 ：[http://localhost:8104/business/dubbo/buy2](http://localhost:8104/business/dubbo/buy2) 
 
-.响应结果：
+响应结果：
 
 ```json
 {
