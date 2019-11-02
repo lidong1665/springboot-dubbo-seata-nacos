@@ -30,7 +30,7 @@ sh startup.sh -m standalone
 输入nacos的账号和密码 分别为nacos：nacos
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190905101221566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9saWRvbmcxNjY1LmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
-这是后naocs 就正常启动了。
+这是时候naocs 就正常启动了。
 ## 2.2 下载seata0.8.0 并安装启动
 
 #### 2.2.1 在 [Seata Release](https://github.com/seata/seata/releases/tag/v0.8.0) 下载最新版的 Seata Server 并解压得到如下目录：
@@ -146,7 +146,7 @@ metrics.exporter-list=prometheus
 metrics.exporter-prometheus-port=9898
 ```
 这里主要修改了如下几项：
-- store.mode :存储模式 默认file  这里我修改为db 模式 ，并且需要两个表`global_table`和`branch_table`
+- store.mode :存储模式 默认file  这里我修改为db 模式 ，并且需要三个表`global_table`、`branch_table`和`lock_table`
 - store.db.driver-class-name： 默认没有，会报错。添加了 `com.mysql.jdbc.Driver`
 - store.db.datasource=dbcp ：数据源 dbcp
 - store.db.db-type=mysql : 存储数据库的类型为`mysql`
@@ -161,6 +161,8 @@ metrics.exporter-prometheus-port=9898
 也可以在 Nacos 配置页面添加，data-id 为 service.vgroup_mapping.${YOUR_SERVICE_NAME}-seata-service-group, group 为 SEATA_GROUP， 如果不添加该配置，启动后会提示no available server to connect
 
 **注意：** 配置文件末尾有空行，需要删除，否则会提示失败，尽管实际上是成功的
+
+***db模式下的所需的三个表的数据库脚本位于`seata\conf\db_store.sql`***
 
 `global_table`的表结构
 
@@ -205,6 +207,22 @@ CREATE TABLE `branch_table` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+```
+`lock_table`的表结构
+
+```
+create table `lock_table` (
+  `row_key` varchar(128) not null,
+  `xid` varchar(96),
+  `transaction_id` long ,
+  `branch_id` long,
+  `resource_id` varchar(256) ,
+  `table_name` varchar(32) ,
+  `pk` varchar(32) ,
+  `gmt_create` datetime ,
+  `gmt_modified` datetime,
+  primary key(`row_key`)
+);
 ```
 
 #### 2.2.4 将 Seata 配置添加到 Nacos 中
@@ -1023,7 +1041,7 @@ if (!flag) {
 ```
 使用postman 发送 ：[http://localhost:8104/business/dubbo/buy2](http://localhost:8104/business/dubbo/buy2) 
 
-响应结果：
+.响应结果：
 
 ```json
 {
@@ -1122,3 +1140,6 @@ java.lang.RuntimeException: 测试抛异常后，分布式事务回滚！
 我们查看数据库数据，已经回滚，和上面的数据一致。
 
 到这里一个简单的案例基本就分析结束。感谢你的学习。
+
+最后想一起交流技术的可以加我wx:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019091810182996.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9saWRvbmcxNjY1LmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
