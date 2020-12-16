@@ -6,8 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(scanBasePackages = "io.seata.samples.integration.call",
-exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = "io.seata.samples.integration.call", exclude = {DataSourceAutoConfiguration.class})
 @EnableDubbo(scanBasePackages = "io.seata.samples.integration.call")
 public class BusinessExampleApplication {
 

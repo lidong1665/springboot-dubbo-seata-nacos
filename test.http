@@ -1,0 +1,35 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+### 正常流程测试
+
+POST http://localhost:8104/business/dubbo/buy
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "userId":1,
+  "commodityCode":"C201901140001",
+  "name":"fan",
+  "count":50,
+  "amount":"100"
+}
+
+### 异常流程测试
+POST http://localhost:8104/business/dubbo/buy2
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+"userId":1,
+"commodityCode":"C201901140001",
+"name":"fan",
+"count":50,
+"amount":"100"
+}

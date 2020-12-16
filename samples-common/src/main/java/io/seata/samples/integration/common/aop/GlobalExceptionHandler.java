@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Author: heshouyou
+ * @Author: lidong
  * @Description  全局异常处理
  * @Date Created in 2019/1/9 14:12
  */
 
 
 @Slf4j
-@ControllerAdvice(basePackages = "com.sinochem.finance.hsy")
+@ControllerAdvice(basePackages = "io.seata.samples.integration")
 public class GlobalExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);

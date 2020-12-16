@@ -3,7 +3,7 @@ package io.seata.samples.integration.common.response;
 import java.io.Serializable;
 
 /**
- * @author: heshouyou
+ * @author: lidong
  * @date: 2018-07-03 16:55
  */
 public class ObjectResponse<T> extends BaseResponse implements Serializable {

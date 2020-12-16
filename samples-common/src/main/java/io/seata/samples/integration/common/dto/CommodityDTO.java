@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * @Author: heshouyou
+ * @Author: lidong
  * @Description 商品信息
  * @Date Created in 2019/1/13 16:25
  */

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 /**
- * @Author: heshouyou
+ * @Author: lidong
  * @Description 订单信息
  * @Date Created in 2019/1/13 16:33
  */

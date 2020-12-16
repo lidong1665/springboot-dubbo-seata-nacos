@@ -3,7 +3,7 @@ package io.seata.samples.integration.common.exception;
 import io.seata.samples.integration.common.enums.RspStatusEnum;
 
 /**
- * @Author: heshouyou
+ * @Author: lidong
  * @Description  自定义异常
  * @Date Created in 2019/1/15 9:44
  */

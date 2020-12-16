@@ -3,7 +3,7 @@ package io.seata.samples.integration.common.enums;
 /**
  * The enum Rsp status enum.
  *
- * @Author: heshouyou
+ * @Author: lidong
  * @Description
  * @Date Created in 2019/1/14 10:18
  */

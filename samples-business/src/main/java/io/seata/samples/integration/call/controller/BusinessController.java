@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author: heshouyou
+ * @Author: lidong
  * @Description  Dubbo业务执行入口
  * @Date Created in 2019/1/14 17:15
  */
@@ -38,7 +38,7 @@ public class BusinessController {
     }
 
     /**
-     * 模拟用户购买商品下单业务逻辑流程
+     * 模拟用户购买商品下单业务异常逻辑流程
      * @Param:
      * @Return:
      */
